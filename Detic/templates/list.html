@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            width: 90%;
+            height: 80vh;
+            gap: 20px;
+        }
+        /* Left section - Image viewer */
+        .image-viewer-container {
+            flex: 1;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+        .image-viewer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f5f5f5;
+            position: relative;
+            height: 60vh;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .image-viewer img {
+            width: 90%;
+            height: 90%;
+            object-fit: contain;
+            border-radius: 0;
+            
+        }
+        .button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            z-index: 2;
+        }
+        .button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .button-left {
+            left: 10px;
+        }
+        .button-right {
+            right: 10px;
+        }
+        /* Right section - Product details */
+        .product-details {
+            flex: 1;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .brand-name {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+        
+        .product-name {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 8px 0 16px 0;
+            color: #333;
+        }
+        
+        .key-features {
+            margin: 16px 0;
+            font-size: 1.2rem;
+            color: #333;
+        }
+        
+        .price-section {
+            margin: 24px 0;
+            padding: 16px 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .discount {
+            color: #ff0000;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        .price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .mrp {
+            color: #666;
+            text-decoration: line-through;
+            margin-left: 8px;
+        }
+        
+        .product-details-table {
+            width: 100%;
+            margin: 24px 0;
+            border-collapse: collapse;
+        }
+        
+        .product-details-table tr {
+            border-bottom: 1px solid #eee;
+        }
+        
+        .product-details-table tr:last-child {
+            border-bottom: none;
+        }
+        
+        .product-details-table td {
+            padding: 12px 8px;
+        }
+        
+        .product-details-table td:first-child {
+            font-weight: bold;
+            width: 40%;
+            color: #666;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 24px 0 16px 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left: Image Viewer -->
+        <div class="image-viewer-container">
+            <div class="image-viewer">
+                <button class="button button-left" onclick="showPreviousImage()">&#8592;</button>
+                <img id="current-image" src="" alt="Image Viewer">
+                <button class="button button-right" onclick="showNextImage()">&#8594;</button>
+            </div>
+        </div>
+        
+        <!-- Right: Product Details -->
+        <div class="product-details">
+            <div class="brand-name">{{llm_result.brand}}</div>
+            <h1 class="product-name">{{llm_result.product_name}}</h1>
+            
+            <!-- Key Features -->
+            <div class="key-features">
+                {% if llm_result.features %}
+                {{llm_result.description}}
+                {% endif %}
+            </div>
+            
+            <!-- Price Section -->
+            <div class="price-section">
+                {% if llm_result.offer != "No offer available" %}
+                <span class="discount">{{llm_result.offer}} off</span>
+                {% endif %}
+                <span class="price">{{llm_result.price}}</span>
+            </div>
+            
+            <!-- Product Details Table -->
+            <h2 class="section-title">Product Details</h2>
+            <table class="product-details-table">
+                <tr>
+                    <td>Product Name</td>
+                    <td>{{llm_result.product_name}}</td>
+                </tr>
+                <tr>
+                    <td>Country of Origin</td>
+                    <td>{{llm_result.country_of_origin}}</td>
+                </tr>
+                <tr>
+                    <td>Available Sizes</td>
+                    <td>{{llm_result.sizes}}</td>
+                </tr>
+                <tr>
+                    <td>Color Options</td>
+                    <td>{{llm_result.color}}</td>
+                </tr>
+                <tr>
+                    <td>Material</td>
+                    <td>{{llm_result.material if llm_result.material != "Not specified" else "-"}}</td>
+                </tr>
+                <tr>
+                    <td>Target User</td>
+                    <td>{{llm_result.target}}</td>
+                </tr>
+                <tr>
+                    <td>Features</td>
+                    <td>{{llm_result.features}}</td>
+                </tr>
+                <tr>
+                    <td>Technology</td>
+                    <td>{{llm_result.technology}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script>
+        const images = {{ local_result|tojson|safe }};
+        let currentIndex = 0;
+        
+        function updateImage() {
+            const imgElement = document.getElementById("current-image");
+            if (images.length > 0) {
+                console.log(images[currentIndex]);
+                imgElement.src = 'static/'+images[currentIndex];
+                imgElement.alt = `Image ${currentIndex + 1}`;
+            } else {
+                imgElement.src = "";
+                imgElement.alt = "No images available";
+            }
+        }
+    
+        function showNextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateImage();
+        }
+    
+        function showPreviousImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateImage();
+        }
+    
+        updateImage();
+    </script>
+    
+</body>
+</html>

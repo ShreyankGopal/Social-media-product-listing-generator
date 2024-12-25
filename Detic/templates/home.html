@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image and Paragraph Input</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="blue-box">
+            <form action="/process" method="POST" enctype="multipart/form-data">
+                <label for="images">Upload JPG Images:</label>
+                <input type="file" id="images" name="images" accept=".jpg" multiple required><br><br>
+                <label for="paragraph">Enter Paragraph (650 characters max):</label>
+                <textarea id="paragraph" name="paragraph" maxlength="650" required></textarea><br><br>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
