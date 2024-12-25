@@ -127,7 +127,7 @@ class ProductExtractor:
 
 def mainLLM(txt):
     # Your Google API key
-    API_KEY = "xyzjhv"  # Replace with your actual Google API key
+    API_KEY = "AIzaSyCpueqTfWazcvKgiRnzu6BTTrZGxFkFiNQ"  # Replace with your actual Google API key
     
     # Initialize extractor
     extractor = ProductExtractor(API_KEY)

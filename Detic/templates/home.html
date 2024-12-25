@@ -7,16 +7,28 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 </head>
 <body>
+    <div id="loading">
+        <img src="https://cdn.pixabay.com/animation/2022/10/11/03/16/03-16-39-160_512.gif" alt="Loading...">
+        <p>Processing, please wait...</p>
+    </div>
     <div class="container">
         <div class="blue-box">
-            <form action="/process" method="POST" enctype="multipart/form-data">
-                <label for="images">Upload JPG Images:</label>
-                <input type="file" id="images" name="images" accept=".jpg" multiple required><br><br>
-                <label for="paragraph">Enter Paragraph (650 characters max):</label>
-                <textarea id="paragraph" name="paragraph" maxlength="650" required></textarea><br><br>
+            <form action="/process" method="post" enctype="multipart/form-data" onsubmit="showLoading()">
+                <label for="images">Upload Images:</label>
+                <input type="file" id="images" name="images" multiple required>
+                
+                <label for="paragraph">Paragraph:</label>
+                <textarea id="paragraph" name="paragraph" required></textarea>
+                
                 <button type="submit">Submit</button>
             </form>
         </div>
     </div>
+    <script>
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementsByClassName('container').style.display = 'none';
+        }
+    </script>
 </body>
 </html>

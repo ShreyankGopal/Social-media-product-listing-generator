@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <style>
+        /* Styles for the loading screen */
+        #loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 1000;
+            text-align: center;
+        }
+
+        #loading img {
+            margin-top: 20%;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading">
+        <img src="https://cdn.pixabay.com/animation/2022/10/11/03/16/03-16-39-160_512.gif" alt="Loading...">
+        <p>Processing, please wait...</p>
+    </div>
+    
+    <form action="{{ url_for('process') }}" method="post" enctype="multipart/form-data" onsubmit="showLoading()">
+        <label for="images">Upload Images:</label>
+        <input type="file" id="images" name="images" multiple required>
+        
+        <label for="paragraph">Paragraph:</label>
+        <textarea id="paragraph" name="paragraph" required></textarea>
+        
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
